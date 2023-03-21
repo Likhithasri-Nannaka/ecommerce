@@ -1,9 +1,10 @@
 import { productsArr } from "../../data/productData";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import { Fragment } from "react";
 const Body = () => {
   return (
-    <div>
+    <Fragment>
       <h2 style={{ textAlign: "center" }}>Music</h2>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div>
@@ -107,7 +108,7 @@ const Body = () => {
           })}
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 };
 export default Body;

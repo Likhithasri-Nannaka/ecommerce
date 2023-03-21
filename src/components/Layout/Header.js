@@ -1,7 +1,15 @@
-import { Fragment } from "react";
-import { Navbar, Nav, Button, Container } from "react-bootstrap";
+import { Fragment, useState } from "react";
+import { Navbar, Nav, Button, Container, Modal } from "react-bootstrap";
+import Cart from "./Cart";
 
 const Header = () => {
+  const [showCart, setShowCart] = useState(false);
+  const openCart = () => {
+    setShowCart(true);
+  };
+  const closeCart = () => {
+    setShowCart(false);
+  };
   return (
     <Fragment>
       <Navbar bg="dark" expand="sm" variant="dark">
@@ -28,7 +36,11 @@ const Header = () => {
             </Nav.Item>
           </Nav>
         </Container>
-        <Button variant="outline-primary" style={{ marginRight: "15px" }}>
+        <Button
+          variant="outline-primary"
+          style={{ marginRight: "15px" }}
+          onClick={openCart}
+        >
           Cart
         </Button>
       </Navbar>
@@ -38,6 +50,7 @@ const Header = () => {
       >
         The Generics
       </p>
+      {showCart && <Cart onClose={closeCart} />}
     </Fragment>
   );
 };
