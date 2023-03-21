@@ -1,14 +1,26 @@
-import { productsArr } from "../../data/productData";
+import { productsArr } from "../Data/productData";
+import CartContext from "../Store/CartContext";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
+
 const Body = () => {
+  const cartCtx = useContext(CartContext);
+  const addToCartHandler = (item) => {
+    cartCtx.addItem({
+      id: item.id,
+      imageUrl: item.imageUrl,
+      title: item.title,
+      price: item.price,
+      amount: 1,
+    });
+  };
   return (
     <Fragment>
       <h2 style={{ textAlign: "center" }}>Music</h2>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div>
-          {productsArr.map((product, index) => {
+          {productsArr.map((item, index) => {
             if (index % 2 === 0) {
               return (
                 <Card
@@ -24,11 +36,11 @@ const Body = () => {
                     <Card.Title
                       style={{ marginBottom: "15px", textAlign: "center" }}
                     >
-                      {product.title}
+                      {item.title}
                     </Card.Title>
                     <Card.Img
-                      variant="top"
-                      src={product.imageUrl}
+                      variant="center"
+                      src={item.imageUrl}
                       style={{
                         transition: "transform .3s",
                         width: "100%",
@@ -42,23 +54,26 @@ const Body = () => {
                       }}
                     />
                     <Card.Text style={{ float: "left", marginTop: "15px" }}>
-                      ${product.price}
+                      ${item.price}
                     </Card.Text>
                     <Button
                       variant="primary"
                       style={{ float: "right", marginTop: "15px" }}
+                      onClick={() => addToCartHandler(item)}
                     >
                       Add to Cart
                     </Button>
-                    <div style={{ clear: "both" }} />
+                    <div style={{ clear: "both" }}></div>
                   </Card.Body>
                 </Card>
               );
+            } else {
+              return null;
             }
           })}
         </div>
         <div>
-          {productsArr.map((product, index) => {
+          {productsArr.map((item, index) => {
             if (index % 2 !== 0) {
               return (
                 <Card
@@ -74,11 +89,11 @@ const Body = () => {
                     <Card.Title
                       style={{ marginBottom: "15px", textAlign: "center" }}
                     >
-                      {product.title}
+                      {item.title}
                     </Card.Title>
                     <Card.Img
-                      variant="top"
-                      src={product.imageUrl}
+                      variant="center"
+                      src={item.imageUrl}
                       style={{
                         transition: "transform .3s",
                         width: "100%",
@@ -92,18 +107,21 @@ const Body = () => {
                       }}
                     />
                     <Card.Text style={{ float: "left", marginTop: "15px" }}>
-                      ${product.price}
+                      ${item.price}
                     </Card.Text>
                     <Button
                       variant="primary"
                       style={{ float: "right", marginTop: "15px" }}
+                      onClick={() => addToCartHandler(item)}
                     >
                       Add to Cart
                     </Button>
-                    <div style={{ clear: "both" }} />
+                    <div style={{ clear: "both" }}></div>
                   </Card.Body>
                 </Card>
               );
+            } else {
+              return null;
             }
           })}
         </div>

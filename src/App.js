@@ -1,13 +1,14 @@
 import Header from "./components/Layout/Header";
 import Body from "./components/Layout/Body";
 import Footer from "./components/Layout/Footer";
+import CartProvider from "./components/Store/CartProvider";
 function App() {
   return (
-    <div>
+    <CartProvider>
       <Header />
       <Body />
       <Footer />
-    </div>
+    </CartProvider>
   );
 }
 

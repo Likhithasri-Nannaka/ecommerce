@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
-import { Navbar, Nav, Button, Container, Modal } from "react-bootstrap";
-import Cart from "./Cart";
+import { Navbar, Nav, Button, Container } from "react-bootstrap";
+import Cart from "../Cart/Cart";
+import { BsCart3 } from "react-icons/bs";
 
 const Header = () => {
   const [showCart, setShowCart] = useState(false);
@@ -38,10 +39,15 @@ const Header = () => {
         </Container>
         <Button
           variant="outline-primary"
-          style={{ marginRight: "15px" }}
+          style={{
+            marginRight: "15px",
+            backgroundColor: "transparent",
+            borderColor: "#007bff",
+            color: "white",
+          }}
           onClick={openCart}
         >
-          Cart
+          Cart <BsCart3 />
         </Button>
       </Navbar>
       <p
