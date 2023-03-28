@@ -3,6 +3,7 @@ import { Navbar, Nav, Button, Container } from "react-bootstrap";
 import Cart from "../Cart/Cart";
 import CartContext from "../Store/CartContext";
 import { BsCart3 } from "react-icons/bs";
+import { useLocation } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 
 const Header = () => {
@@ -20,6 +21,7 @@ const Header = () => {
   const closeCart = () => {
     setShowCart(false);
   };
+  const location = useLocation();
   return (
     <Fragment>
       <Navbar bg="dark" expand="sm" variant="dark">
@@ -52,21 +54,34 @@ const Header = () => {
                 About
               </NavLink>
             </Nav.Item>
+            <Nav.Item style={{ marginRight: "40px" }}>
+              <NavLink
+                to="/contact_us"
+                className="nav-link"
+                style={{ color: "white" }}
+              >
+                Contact Us
+              </NavLink>
+            </Nav.Item>
           </Nav>
         </Container>
-        <Button
-          variant="outline-primary"
-          style={{
-            marginRight: "15px",
-            backgroundColor: "transparent",
-            borderColor: "#007bff",
-            color: "white",
-          }}
-          onClick={openCart}
-        >
-          Cart <BsCart3 />
-          {numberOfCartItems}
-        </Button>
+        {location.pathname !== "/home" &&
+          location.pathname !== "/about" &&
+          location.pathname !== "/contact_us" && (
+            <Button
+              variant="outline-primary"
+              style={{
+                marginRight: "15px",
+                backgroundColor: "transparent",
+                borderColor: "#007bff",
+                color: "white",
+              }}
+              onClick={openCart}
+            >
+              Cart <BsCart3 />
+              {numberOfCartItems}
+            </Button>
+          )}
       </Navbar>
       {showCart && <Cart onClose={closeCart} />}
     </Fragment>
