@@ -1,10 +1,19 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useContext } from "react";
 import { Navbar, Nav, Button, Container } from "react-bootstrap";
 import Cart from "../Cart/Cart";
+import CartContext from "../Store/CartContext";
 import { BsCart3 } from "react-icons/bs";
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
   const [showCart, setShowCart] = useState(false);
+  const cartCtx = useContext(CartContext);
+
+  const { items } = cartCtx;
+
+  const numberOfCartItems = items.reduce((curNumber, item) => {
+    return curNumber + item.amount;
+  }, 0);
   const openCart = () => {
     setShowCart(true);
   };
@@ -17,23 +26,31 @@ const Header = () => {
         <Container className="justify-content-center">
           <Nav>
             <Nav.Item style={{ marginRight: "40px" }}>
-              <Nav.Link href="/" style={{ color: "white" }}>
+              <NavLink
+                to="/home"
+                className="nav-link"
+                style={{ color: "white" }}
+              >
                 Home
-              </Nav.Link>
+              </NavLink>
             </Nav.Item>
             <Nav.Item
               style={{
                 marginRight: "40px",
               }}
             >
-              <Nav.Link href="/" style={{ color: "white" }}>
+              <NavLink to="/" className="nav-link" style={{ color: "white" }}>
                 Store
-              </Nav.Link>
+              </NavLink>
             </Nav.Item>
             <Nav.Item style={{ marginRight: "40px" }}>
-              <Nav.Link href="/" style={{ color: "white" }}>
+              <NavLink
+                to="/about"
+                className="nav-link"
+                style={{ color: "white" }}
+              >
                 About
-              </Nav.Link>
+              </NavLink>
             </Nav.Item>
           </Nav>
         </Container>
@@ -48,6 +65,7 @@ const Header = () => {
           onClick={openCart}
         >
           Cart <BsCart3 />
+          {numberOfCartItems}
         </Button>
       </Navbar>
       <p

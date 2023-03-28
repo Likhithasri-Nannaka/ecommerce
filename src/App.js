@@ -1,12 +1,18 @@
-import Header from "./components/Layout/Header";
-import Body from "./components/Layout/Body";
-import Footer from "./components/Layout/Footer";
 import CartProvider from "./components/Store/CartProvider";
+import { Routes, Route } from "react-router-dom";
+import Header from "./components/Layout/Header";
+import Footer from "./components/Layout/Footer";
+import Store from "./components/Pages/Store";
+import About from "./components/Pages/About";
+
 function App() {
   return (
     <CartProvider>
       <Header />
-      <Body />
+      <Routes>
+        <Route path="/" element={<Store />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
       <Footer />
     </CartProvider>
   );

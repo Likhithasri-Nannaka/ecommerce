@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "../UI/Modal";
 import CartContext from "../Store/CartContext";
 import CartItem from "./CartItem";
+import { Table } from "react-bootstrap";
 
 const Cart = (props) => {
   const cartCtx = useContext(CartContext);
@@ -13,7 +14,7 @@ const Cart = (props) => {
   );
 
   const cartItems = (
-    <ul style={{ listStyle: "none", padding: 0 }}>
+    <tbody>
       {cartCtx.items.map((item) => (
         <CartItem
           key={item.id}
@@ -25,7 +26,7 @@ const Cart = (props) => {
           onRemove={() => cartCtx.removeItem(item.id)}
         />
       ))}
-    </ul>
+    </tbody>
   );
 
   return (
@@ -50,32 +51,44 @@ const Cart = (props) => {
           Close
         </Button>
       </div>
-      <div style={{ padding: "10px", borderBottom: "3px solid lightgray" }}>
-        <span style={{ margin: "30px", fontWeight: "bold" }}>Item</span>
-        <span style={{ margin: "30px", fontWeight: "bold" }}>Name</span>
-        <span style={{ margin: "20px", fontWeight: "bold" }}>Price</span>
-        <span style={{ margin: "15px", fontWeight: "bold" }}>Quantity</span>
-        <span style={{ margin: "40px", fontWeight: "bold" }}>Action</span>
-      </div>
-      {cartCtx.items.length === 0 ? (
-        <p style={{ textAlign: "center", marginTop: "30px" }}>
-          No items in Cart
-        </p>
-      ) : (
-        cartItems
-      )}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          margin: "5px",
-        }}
-      >
-        <span style={{ fontWeight: "bold" }}>Total Amount</span>
-        <span style={{ color: "green", fontWeight: "bold" }}>
-          $ {totalAmount}
-        </span>
-      </div>
+      <Table style={{ width: "100%" }}>
+        <thead>
+          <tr style={{ borderBottom: "3px solid lightgray" }}>
+            <th style={{ textAlign: "left", padding: "10px" }}>Item</th>
+            <th style={{ textAlign: "left", padding: "10px" }}>Name</th>
+            <th style={{ textAlign: "left", padding: "10px" }}>Price</th>
+            <th style={{ textAlign: "left", padding: "10px" }}>Quantity</th>
+            <th style={{ textAlign: "left", padding: "10px" }}>Action</th>
+          </tr>
+        </thead>
+        {cartCtx.items.length === 0 ? (
+          <tbody>
+            <tr>
+              <td
+                colSpan="5"
+                style={{ textAlign: "center", marginTop: "30px" }}
+              >
+                No items in Cart
+              </td>
+            </tr>
+          </tbody>
+        ) : (
+          cartItems
+        )}
+        <tfoot>
+          <tr style={{ borderTop: "1px solid lightgray" }}>
+            <td colSpan="3" style={{ textAlign: "right", fontWeight: "bold" }}>
+              Total Amount :
+            </td>
+            <td
+              colSpan="3"
+              style={{ textAlign: "left", color: "green", fontWeight: "bold" }}
+            >
+              $ {totalAmount}
+            </td>
+          </tr>
+        </tfoot>
+      </Table>
     </Modal>
   );
 };
