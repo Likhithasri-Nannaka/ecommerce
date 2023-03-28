@@ -68,12 +68,6 @@ const Header = () => {
           {numberOfCartItems}
         </Button>
       </Navbar>
-      <p
-        className="display-5 text-center p-3 bg-secondary mt-1 text-white"
-        style={{ fontSize: "6em", fontFamily: "bold" }}
-      >
-        The Generics
-      </p>
       {showCart && <Cart onClose={closeCart} />}
     </Fragment>
   );
