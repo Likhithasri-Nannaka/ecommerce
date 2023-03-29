@@ -3,6 +3,7 @@ import CartContext from "../Store/CartContext";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Fragment, useContext } from "react";
+import { Link } from "react-router-dom";
 
 const Body = () => {
   const cartCtx = useContext(CartContext);
@@ -38,21 +39,23 @@ const Body = () => {
                     >
                       {item.title}
                     </Card.Title>
-                    <Card.Img
-                      variant="center"
-                      src={item.imageUrl}
-                      style={{
-                        transition: "transform .3s",
-                        width: "100%",
-                        height: "100%",
-                      }}
-                      onMouseOver={(e) => {
-                        e.currentTarget.style.transform = "scale(1.1)";
-                      }}
-                      onMouseOut={(e) => {
-                        e.currentTarget.style.transform = "scale(1)";
-                      }}
-                    />
+                    <Link to={`/product/${item.id}`}>
+                      <Card.Img
+                        variant="center"
+                        src={item.imageUrl}
+                        style={{
+                          transition: "transform .3s",
+                          width: "100%",
+                          height: "100%",
+                        }}
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.transform = "scale(1.1)";
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.transform = "scale(1)";
+                        }}
+                      />
+                    </Link>
                     <Card.Text style={{ float: "left", marginTop: "15px" }}>
                       ${item.price}
                     </Card.Text>
@@ -91,21 +94,23 @@ const Body = () => {
                     >
                       {item.title}
                     </Card.Title>
-                    <Card.Img
-                      variant="center"
-                      src={item.imageUrl}
-                      style={{
-                        transition: "transform .3s",
-                        width: "100%",
-                        height: "100%",
-                      }}
-                      onMouseOver={(e) => {
-                        e.currentTarget.style.transform = "scale(1.1)";
-                      }}
-                      onMouseOut={(e) => {
-                        e.currentTarget.style.transform = "scale(1)";
-                      }}
-                    />
+                    <Link to={`/product/${item.id}`}>
+                      <Card.Img
+                        variant="center"
+                        src={item.imageUrl}
+                        style={{
+                          transition: "transform .3s",
+                          width: "100%",
+                          height: "100%",
+                        }}
+                        onMouseOver={(e) => {
+                          e.currentTarget.style.transform = "scale(1.1)";
+                        }}
+                        onMouseOut={(e) => {
+                          e.currentTarget.style.transform = "scale(1)";
+                        }}
+                      />
+                    </Link>
                     <Card.Text style={{ float: "left", marginTop: "15px" }}>
                       ${item.price}
                     </Card.Text>

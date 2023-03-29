@@ -10,9 +10,8 @@ const Home = () => {
         style={{ fontSize: "6em", fontFamily: "bold" }}
       >
         The Generics
-        <div>
-          <BsPlayCircle />
-        </div>
+        <br />
+        <BsPlayCircle />
       </p>
       <Container>
         <h2 style={{ textAlign: "center" }}>Tours</h2>
