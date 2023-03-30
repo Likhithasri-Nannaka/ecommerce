@@ -8,18 +8,25 @@ import Home from "./components/Pages/Home";
 import Contact from "./components/Pages/ContactUs";
 import ProductDetails from "./components/Pages/ProductsPage";
 import AuthForm from "./components/Auth/AuthForm";
+import AuthContext from "./components/Store/Auth-Context";
+import { useContext } from "react";
 
 function App() {
+  const authCtx = useContext(AuthContext);
   return (
     <CartProvider>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/store" element={<Store />} />
-        <Route path="/product/:productId" element={<ProductDetails />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact_us" element={<Contact />} />
-        <Route path="/auth" element={<AuthForm />} />
+        {authCtx.isLoggedIn && (
+          <>
+            <Route path="/home" element={<Home />} />
+            <Route path="/store" element={<Store />} />
+            <Route path="/product/:productId" element={<ProductDetails />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact_us" element={<Contact />} />
+          </>
+        )}
+        {!authCtx.isLoggedIn && <Route path="/auth" element={<AuthForm />} />}
       </Routes>
       <Footer />
     </CartProvider>

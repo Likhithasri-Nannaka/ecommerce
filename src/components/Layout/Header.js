@@ -3,12 +3,25 @@ import { Navbar, Nav, Button, Container } from "react-bootstrap";
 import Cart from "../Cart/Cart";
 import CartContext from "../Store/CartContext";
 import { BsCart3 } from "react-icons/bs";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
+import AuthContext from "../Store/Auth-Context";
 
 const Header = () => {
   const [showCart, setShowCart] = useState(false);
   const cartCtx = useContext(CartContext);
+
+  const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    authCtx.logout();
+    navigate("/auth", { replace: true });
+  };
+
+  const loginHandler = () => {
+    navigate("/auth", { replace: true });
+  };
 
   const { items } = cartCtx;
 
@@ -28,7 +41,11 @@ const Header = () => {
         <Container className="justify-content-center">
           <Nav>
             <Nav.Item style={{ marginRight: "40px" }}>
-              <NavLink to="/" className="nav-link" style={{ color: "white" }}>
+              <NavLink
+                to="/home"
+                className="nav-link"
+                style={{ color: "white" }}
+              >
                 Home
               </NavLink>
             </Nav.Item>
@@ -63,18 +80,10 @@ const Header = () => {
                 Contact Us
               </NavLink>
             </Nav.Item>
-            <Nav.Item style={{ marginRight: "40px" }}>
-              <NavLink
-                to="/auth"
-                className="nav-link"
-                style={{ color: "white" }}
-              >
-                Login
-              </NavLink>
-            </Nav.Item>
           </Nav>
         </Container>
-        {location.pathname !== "/" &&
+        {authCtx.isLoggedIn &&
+          location.pathname !== "/home" &&
           location.pathname !== "/about" &&
           location.pathname !== "/contact_us" &&
           location.pathname !== "/auth" && (
@@ -92,6 +101,34 @@ const Header = () => {
               {numberOfCartItems}
             </Button>
           )}
+        {authCtx.isLoggedIn && location.pathname !== "/auth" && (
+          <Button
+            variant="outline-primary"
+            style={{
+              marginRight: "15px",
+              backgroundColor: "transparent",
+              borderColor: "#007bff",
+              color: "white",
+            }}
+            onClick={logoutHandler}
+          >
+            Logout
+          </Button>
+        )}
+        {!authCtx.isLoggedIn && location.pathname !== "/auth" && (
+          <Button
+            variant="outline-primary"
+            style={{
+              marginRight: "15px",
+              backgroundColor: "transparent",
+              borderColor: "#007bff",
+              color: "white",
+            }}
+            onClick={loginHandler}
+          >
+            Login
+          </Button>
+        )}
       </Navbar>
       {showCart && <Cart onClose={closeCart} />}
     </Fragment>
