@@ -5,6 +5,7 @@ export const productsArr = [
     price: 100,
     imageUrl: "https://pbs.twimg.com/media/Cs47zArVYAAg5dS.jpg",
     altImages: [
+      "https://pbs.twimg.com/media/Cs47zArVYAAg5dS.jpg",
       "https://pbs.twimg.com/media/Cs5msqkVYAAUgSG.jpg",
       "https://pbs.twimg.com/media/EpXetJkWMAE1fz8.jpg",
     ],
@@ -27,6 +28,7 @@ export const productsArr = [
     price: 50,
     imageUrl: "https://pbs.twimg.com/media/EvKvICWXUAQxyCw.jpg:large",
     altImages: [
+      "https://pbs.twimg.com/media/EvKvICWXUAQxyCw.jpg:large",
       "https://pbs.twimg.com/media/EwyzUo-WYAsWuP-.jpg",
       "https://pbs.twimg.com/media/Ew2rooFWUAAjiny.jpg:large",
     ],
@@ -49,6 +51,7 @@ export const productsArr = [
     price: 70,
     imageUrl: "https://pbs.twimg.com/media/Ez_jAQHUUAEE3HR.jpg:large",
     altImages: [
+      "https://pbs.twimg.com/media/Ez_jAQHUUAEE3HR.jpg:large",
       "https://pbs.twimg.com/media/E7kM81FXoAkWsjd.jpg",
       "https://i.redd.it/a65pbqb19c571.jpg",
     ],
@@ -71,7 +74,8 @@ export const productsArr = [
     price: 100,
     imageUrl: "https://pbs.twimg.com/media/EIi0CiOWwAI_9l0.jpg",
     altImages: [
-      "https://pbs.twimg.com/media/ELmW_9GUwAEqy-C.jpg",
+      "https://pbs.twimg.com/media/EIi0CiOWwAI_9l0.jpg",
+      "https://pbs.twimg.com/media/ELpFAnzW4AET9Z9.jpg",
       "https://pyxis.nymag.com/v1/imgs/334/ed7/4727005ad8bde78c8ef50ef69899b66a7b-harry-styles-04.2x.w710.jpg",
     ],
     reviews: [

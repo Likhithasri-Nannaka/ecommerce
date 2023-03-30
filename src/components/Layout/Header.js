@@ -28,11 +28,7 @@ const Header = () => {
         <Container className="justify-content-center">
           <Nav>
             <Nav.Item style={{ marginRight: "40px" }}>
-              <NavLink
-                to="/home"
-                className="nav-link"
-                style={{ color: "white" }}
-              >
+              <NavLink to="/" className="nav-link" style={{ color: "white" }}>
                 Home
               </NavLink>
             </Nav.Item>
@@ -41,7 +37,11 @@ const Header = () => {
                 marginRight: "40px",
               }}
             >
-              <NavLink to="/" className="nav-link" style={{ color: "white" }}>
+              <NavLink
+                to="/store"
+                className="nav-link"
+                style={{ color: "white" }}
+              >
                 Store
               </NavLink>
             </Nav.Item>
@@ -63,11 +63,21 @@ const Header = () => {
                 Contact Us
               </NavLink>
             </Nav.Item>
+            <Nav.Item style={{ marginRight: "40px" }}>
+              <NavLink
+                to="/auth"
+                className="nav-link"
+                style={{ color: "white" }}
+              >
+                Login
+              </NavLink>
+            </Nav.Item>
           </Nav>
         </Container>
-        {location.pathname !== "/home" &&
+        {location.pathname !== "/" &&
           location.pathname !== "/about" &&
-          location.pathname !== "/contact_us" && (
+          location.pathname !== "/contact_us" &&
+          location.pathname !== "/auth" && (
             <Button
               variant="outline-primary"
               style={{
