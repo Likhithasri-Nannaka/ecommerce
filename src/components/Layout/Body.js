@@ -40,21 +40,23 @@ const Body = () => {
                       {item.title}
                     </Card.Title>
                     <Link to={`/product/${item.id}`}>
-                      <Card.Img
-                        variant="center"
-                        src={item.imageUrl}
-                        style={{
-                          transition: "transform .3s",
-                          width: "100%",
-                          height: "100%",
-                        }}
-                        onMouseOver={(e) => {
-                          e.currentTarget.style.transform = "scale(1.1)";
-                        }}
-                        onMouseOut={(e) => {
-                          e.currentTarget.style.transform = "scale(1)";
-                        }}
-                      />
+                      <div style={{ overflow: "hidden" }}>
+                        <Card.Img
+                          variant="center"
+                          src={item.imageUrl}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            transition: "transform 0.7s ease",
+                          }}
+                          onMouseOver={(e) => {
+                            e.currentTarget.style.transform = "scale(1.1)";
+                          }}
+                          onMouseOut={(e) => {
+                            e.currentTarget.style.transform = "scale(1)";
+                          }}
+                        />
+                      </div>
                     </Link>
                     <Card.Text style={{ float: "left", marginTop: "15px" }}>
                       ${item.price}
@@ -95,21 +97,23 @@ const Body = () => {
                       {item.title}
                     </Card.Title>
                     <Link to={`/product/${item.id}`}>
-                      <Card.Img
-                        variant="center"
-                        src={item.imageUrl}
-                        style={{
-                          transition: "transform .3s",
-                          width: "100%",
-                          height: "100%",
-                        }}
-                        onMouseOver={(e) => {
-                          e.currentTarget.style.transform = "scale(1.1)";
-                        }}
-                        onMouseOut={(e) => {
-                          e.currentTarget.style.transform = "scale(1)";
-                        }}
-                      />
+                      <div style={{ overflow: "hidden" }}>
+                        <Card.Img
+                          variant="center"
+                          src={item.imageUrl}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            transition: "transform 0.7s ease",
+                          }}
+                          onMouseOver={(e) => {
+                            e.currentTarget.style.transform = "scale(1.1)";
+                          }}
+                          onMouseOut={(e) => {
+                            e.currentTarget.style.transform = "scale(1)";
+                          }}
+                        />
+                      </div>
                     </Link>
                     <Card.Text style={{ float: "left", marginTop: "15px" }}>
                       ${item.price}

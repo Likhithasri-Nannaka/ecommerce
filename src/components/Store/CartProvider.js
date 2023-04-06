@@ -1,114 +1,195 @@
-import { useReducer } from "react";
+import { useContext, useState, useEffect } from "react";
 import CartContext from "./CartContext";
+import AuthContext from "./Auth-Context";
 
-const defaultCartState = {
+const defaultCart = {
   items: [],
   totalAmount: 0,
 };
 
-const cartReducer = (state, action) => {
-  if (action.type === "ADD_ITEM") {
-    const existingCartItemIndex = state.items.findIndex(
-      (cartItem) => cartItem.id === action.item.id
+const CartProvider = (props) => {
+  const authCtx = useContext(AuthContext);
+  const email = authCtx.email.replace(/[^a-zA-Z0-9]/g, "");
+  const [cart, setCart] = useState(defaultCart);
+  if (!sessionStorage.getItem("fetchExecuted") && authCtx.isLoggedIn) {
+    fetch(
+      `https://react-ecommerce-012-default-rtdb.firebaseio.com/cart${email}.json`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ items: [], totalAmount: 0 }),
+      }
     );
-    const existingCartItem = state.items[existingCartItemIndex];
+    sessionStorage.setItem("fetchExecuted", true);
+  }
+  useEffect(() => {
+    if (!authCtx.isLoggedIn) {
+      setCart(defaultCart);
+    }
+  }, [authCtx.isLoggedIn]);
+  const addItemtoCart = async (item) => {
+    const existingCartItemIndex = cart.items.findIndex(
+      (cartItem) => cartItem.id === item.id
+    );
+    const existingCartItem = cart.items[existingCartItemIndex];
     let updatedItems;
     if (existingCartItem) {
       const updatedItem = {
         ...existingCartItem,
         quantity: existingCartItem.quantity + 1,
-        amount: existingCartItem.amount + action.item.amount,
+        amount: existingCartItem.amount + item.amount,
       };
-      updatedItems = [...state.items];
+      updatedItems = [...cart.items];
       updatedItems[existingCartItemIndex] = updatedItem;
     } else {
       const newItem = {
-        ...action.item,
+        ...item,
         quantity: 1,
       };
-      updatedItems = state.items.concat(newItem);
+      updatedItems = cart.items.concat(newItem);
     }
-    const updatedTotalAmount = state.totalAmount + action.item.amount;
-    return {
+    const updatedTotalAmount = cart.totalAmount + item.amount;
+    setCart({
       items: updatedItems,
       totalAmount: updatedTotalAmount,
-    };
-  }
-  if (action.type === "REMOVE_ITEM") {
-    const existingCartItemIndex = state.items.findIndex(
-      (cartItem) => cartItem.id === action.id
-    );
-    const existingItem = state.items[existingCartItemIndex];
-
-    let updatedItems;
-
-    if (existingItem.quantity === 1) {
-      updatedItems = state.items.filter((item) => item.id !== action.id);
-    } else {
-      const updatedItem = {
-        ...existingItem,
-        quantity: existingItem.quantity - 1,
-        amount:
-          existingItem.amount - existingItem.amount / existingItem.quantity,
-      };
-      updatedItems = [...state.items];
-      updatedItems[existingCartItemIndex] = updatedItem;
+    });
+    try {
+      const response = await fetch(
+        `https://react-ecommerce-012-default-rtdb.firebaseio.com/cart${email}.json`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            items: updatedItems,
+            totalAmount: updatedTotalAmount,
+          }),
+        }
+      );
+      if (!response.ok) {
+        console.log("Something went wrong while adding the item to database");
+      } else {
+        console.log("Successfully added item to the database");
+      }
+    } catch (error) {
+      console.log(error.message);
     }
-    const updatedTotalAmount =
-      state.totalAmount - existingItem.amount / existingItem.quantity;
-    return {
+  };
+
+  const removeItemFromCart = async (id) => {
+    const existingCartItemIndex = cart.items.findIndex(
+      (cartItem) => cartItem.id === id
+    );
+    const existingItem = cart.items[existingCartItemIndex];
+    const updatedTotalAmount = cart.totalAmount - existingItem.amount;
+    const updatedItems = cart.items.filter((item) => item.id !== id);
+    setCart({
       items: updatedItems,
       totalAmount: updatedTotalAmount,
-    };
-  }
-  if (action.type === "UPDATE_ITEM") {
-    const existingCartItemIndex = state.items.findIndex(
-      (cartItem) => cartItem.id === action.id
+    });
+    try {
+      const response = await fetch(
+        `https://react-ecommerce-012-default-rtdb.firebaseio.com/cart${email}.json`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            items: updatedItems,
+            totalAmount: updatedTotalAmount,
+          }),
+        }
+      );
+      if (!response.ok) {
+        console.log(
+          "Something went wrong while deleting the item from database"
+        );
+      } else {
+        console.log("Successfully deleted the item from database");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const updateQuantity = async (id, quantity) => {
+    const existingCartItemIndex = cart.items.findIndex(
+      (cartItem) => cartItem.id === id
     );
-    const existingItem = state.items[existingCartItemIndex];
+    const existingItem = cart.items[existingCartItemIndex];
     const updatedItem = {
       ...existingItem,
-      quantity: action.quantity,
-      amount: (existingItem.amount / existingItem.quantity) * action.quantity,
+      quantity: quantity,
+      amount: (existingItem.amount / existingItem.quantity) * quantity,
     };
-    const updatedItems = [...state.items];
+    const updatedItems = [...cart.items];
     updatedItems[existingCartItemIndex] = updatedItem;
-    const updatedTotalAmount = state.items.reduce(
+    const updatedTotalAmount = cart.items.reduce(
       (acc, item) => acc + item.amount,
       0
     );
-    return {
+    setCart({
       items: updatedItems,
       totalAmount: updatedTotalAmount,
-    };
-  }
-  return defaultCartState;
-};
-
-const CartProvider = (props) => {
-  const [cartState, dispatchCartAction] = useReducer(
-    cartReducer,
-    defaultCartState
-  );
-
-  const addItemToCart = (item) => {
-    dispatchCartAction({ type: "ADD_ITEM", item: item });
+    });
+    try {
+      const response = await fetch(
+        `https://react-ecommerce-012-default-rtdb.firebaseio.com/cart${email}.json`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            items: updatedItems,
+            totalAmount: updatedTotalAmount,
+          }),
+        }
+      );
+      if (!response.ok) {
+        console.log("Something went wrong while updating the item in database");
+      } else {
+        console.log("Successfully updated the item in database");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
-  const removeItemFromCart = (id) => {
-    dispatchCartAction({ type: "REMOVE_ITEM", id: id });
+  const fetchCartItems = async () => {
+    try {
+      const response = await fetch(
+        `https://react-ecommerce-012-default-rtdb.firebaseio.com/cart${email}.json`
+      );
+      if (!response.ok) {
+        console.log(
+          "Something went wrong while fetching Items from the database"
+        );
+      } else {
+        console.log("Successfully fetched items from the database");
+      }
+      const data = await response.json();
+      setCart({
+        items: data.items,
+        totalAmount: data.totalAmount,
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
-  const updateQuantity = (id, quantity) => {
-    dispatchCartAction({ type: "UPDATE_ITEM", id: id, quantity: quantity });
-  };
-
+  useEffect(() => {
+    fetchCartItems();
+  }, []);
   const cartContext = {
-    items: cartState.items,
-    totalAmount: cartState.totalAmount,
-    addItem: addItemToCart,
+    items: cart.items,
+    totalAmount: cart.totalAmount,
+    addItem: addItemtoCart,
     removeItem: removeItemFromCart,
     updateQuantity: updateQuantity,
+    getItems: fetchCartItems,
   };
 
   return (

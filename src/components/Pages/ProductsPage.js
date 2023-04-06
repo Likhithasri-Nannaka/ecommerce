@@ -3,6 +3,7 @@ import { productsArr } from "../Data/productData";
 import { Image, Row, Col, Card } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { Fragment } from "react";
+import { Magnifier, GlassMagnifier } from "react-image-magnifiers";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -35,11 +36,25 @@ const ProductDetails = () => {
       <Row>
         <Col md={6}>
           <Card style={{ border: "none" }}>
-            <Card.Img
-              variant="top"
-              src={selectedProduct.imageUrl}
-              style={{ height: "70vh", objectFit: "contain" }}
-            />
+            <div style={{ paddingLeft: "75px" }}>
+              <Magnifier
+                imageSrc={selectedProduct.imageUrl}
+                imageAlt={selectedProduct.title}
+                dragToMove={false}
+                mouseActivation="hover"
+                cursorStyle="crosshair"
+                interactionSettings={{
+                  magnifyButtonEnabled: false,
+                }}
+                style={{ width: "100%", height: "100%" }}
+              >
+                <GlassMagnifier
+                  magnifierSize="50%"
+                  magnifierBorderSize={1}
+                  magnifierBorderColor="rgba(255, 255, 255, .5)"
+                />
+              </Magnifier>
+            </div>
             <Card.Body>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 {selectedProduct.altImages &&

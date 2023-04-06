@@ -26,7 +26,15 @@ function App() {
             <Route path="/contact_us" element={<Contact />} />
           </>
         )}
-        {!authCtx.isLoggedIn && <Route path="/auth" element={<AuthForm />} />}
+        {!authCtx.isLoggedIn && (
+          <>
+            <Route path="/home" element={<AuthForm />} />
+            <Route path="/store" element={<AuthForm />} />
+            <Route path="/about" element={<AuthForm />} />
+            <Route path="/contact_us" element={<AuthForm />} />
+            <Route path="/auth" element={<AuthForm />} />
+          </>
+        )}
       </Routes>
       <Footer />
     </CartProvider>

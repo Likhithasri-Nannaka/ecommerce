@@ -1,5 +1,6 @@
 export const productsArr = [
   {
+    key: "10",
     id: "01",
     title: "Album 1",
     price: 100,
@@ -23,6 +24,7 @@ export const productsArr = [
     ],
   },
   {
+    key: "11",
     id: "02",
     title: "Album 2",
     price: 50,
@@ -46,6 +48,7 @@ export const productsArr = [
     ],
   },
   {
+    key: "12",
     id: "03",
     title: "Album 3",
     price: 70,
@@ -69,6 +72,7 @@ export const productsArr = [
     ],
   },
   {
+    key: "13",
     id: "04",
     title: "Album 4",
     price: 100,

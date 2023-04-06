@@ -10,7 +10,6 @@ import AuthContext from "../Store/Auth-Context";
 const Header = () => {
   const [showCart, setShowCart] = useState(false);
   const cartCtx = useContext(CartContext);
-
   const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -18,13 +17,7 @@ const Header = () => {
     authCtx.logout();
     navigate("/auth", { replace: true });
   };
-
-  const loginHandler = () => {
-    navigate("/auth", { replace: true });
-  };
-
   const { items } = cartCtx;
-
   const numberOfCartItems = items.reduce((curNumber, item) => {
     return curNumber + item.amount;
   }, 0);
@@ -39,7 +32,7 @@ const Header = () => {
     <Fragment>
       <Navbar bg="dark" expand="sm" variant="dark">
         <Container className="justify-content-center">
-          <Nav>
+          <Nav className="flex-grow-3">
             <Nav.Item style={{ marginRight: "40px" }}>
               <NavLink
                 to="/home"
@@ -113,20 +106,6 @@ const Header = () => {
             onClick={logoutHandler}
           >
             Logout
-          </Button>
-        )}
-        {!authCtx.isLoggedIn && location.pathname !== "/auth" && (
-          <Button
-            variant="outline-primary"
-            style={{
-              marginRight: "15px",
-              backgroundColor: "transparent",
-              borderColor: "#007bff",
-              color: "white",
-            }}
-            onClick={loginHandler}
-          >
-            Login
           </Button>
         )}
       </Navbar>
